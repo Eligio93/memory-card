@@ -2,9 +2,16 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+let apiKey= import.meta.env.UNSPLASH_API_KEY;
+let cities=["Venezia", "Roma", "Napoli", "Firenze","Cinque_Terre","Bari","Milano","Parma", "Alberobello","Catania"]
+let urls=[];
+cities.forEach(city=>{
+  urls.push(`https://api.unsplash.com/search/photos/?client_id=${apiKey}&page=1&per_page=1&query=${city}&orientation=landscape`)
+})
+console.log(urls);
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
 
   return (
     <>
