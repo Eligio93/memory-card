@@ -5,7 +5,7 @@ import "./App.css";
 
 // require('dotenv').config();
 let apiKey=import.meta.env.VITE_UNSPLASH_API_KEY;
-  //  "R9ZvwDB7zyok9T-goWw_pi59D9NoBkhD6EGF1txiyFI";
+
 let cities = [
   "Venezia",
   "Roma",
