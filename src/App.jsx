@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import "./App.css";
 function App() {
   const [imgUrls, setImgUrls] = useState([]);
-  const [win, setWin] = useState(null);
   const [score, setScore] = useState(0);
   const [bestScore, setBestScore] = useState(0);
   //importing Api Key
@@ -35,8 +34,8 @@ function App() {
           }).then((response) => response.json())
         );
         const responses = await Promise.all(requests);
-        setImgUrls(responses.map((response) => response.results[0].urls.full));
-        console.log(imgUrls);
+        console.log(responses)
+        setImgUrls(responses.map((response) => response.results[0].urls.small));
       } catch (error) {
         console.log(error);
       }
@@ -51,6 +50,10 @@ function App() {
         setBestScore(score);
       }
       setScore(0);
+     console.log(document.querySelectorAll(".clicked"))
+     document.querySelectorAll(".clicked").forEach(element=>{
+      element.classList.remove("clicked")
+     })
     } else {
       e.target.className = "clicked";
       setScore((score) => score + 1);
