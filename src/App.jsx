@@ -2,6 +2,9 @@ import { useState, useEffect } from "react";
 import "./App.css";
 function App() {
   const [imgUrls, setImgUrls] = useState([]);
+  const [win, setWin] = useState(null);
+  const [score, setScore] = useState(0);
+  const [bestScore, setBestScore] = useState(0);
   //importing Api Key
   let apiKey = import.meta.env.VITE_UNSPLASH_API_KEY;
   let cities = [
@@ -41,15 +44,31 @@ function App() {
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  const shuffleArray = function () {
-    console.log("clicked");
+
+  const handleClick = function (e) {
+    if (e.target.classList.contains("clicked")) {
+      if (score > bestScore) {
+        setBestScore(score);
+      }
+      setScore(0);
+    } else {
+      e.target.className = "clicked";
+      setScore((score) => score + 1);
+    }
+
     setImgUrls([...imgUrls.sort(() => Math.random() - 0.5)]);
   };
   return (
     <>
-      {imgUrls.map((url) => (
-        <img key={url} src={url} alt="" onClick={shuffleArray} />
-      ))}
+      <div className="header">
+        <p>Score: {score}</p>
+        <p>Best Score:{bestScore}</p>
+      </div>
+      <div className="imgRender">
+        {imgUrls.map((url) => (
+          <img key={url} src={url} alt="" onClick={handleClick} />
+        ))}
+      </div>
     </>
   );
 }
