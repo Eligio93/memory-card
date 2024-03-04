@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-
 import "./App.css";
 function App() {
   const [imgUrls, setImgUrls] = useState([]);
@@ -42,10 +41,17 @@ function App() {
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  return <>
-  
-  </>;
+  const shuffleArray = function () {
+    console.log("clicked");
+    setImgUrls([...imgUrls.sort(() => Math.random() - 0.5)]);
+  };
+  return (
+    <>
+      {imgUrls.map((url) => (
+        <img key={url} src={url} alt="" onClick={shuffleArray} />
+      ))}
+    </>
+  );
 }
 
 export default App;
