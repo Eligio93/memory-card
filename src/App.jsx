@@ -1,9 +1,6 @@
 import { useState, useEffect } from "react";
 
 import "./App.css";
-
-// require('dotenv').config();
-
 function App() {
   const [imgUrls, setImgUrls] = useState([]);
   //importing Api Key
@@ -43,9 +40,12 @@ function App() {
       }
     };
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return <></>;
+  return <>
+  
+  </>;
 }
 
 export default App;
