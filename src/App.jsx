@@ -18,7 +18,7 @@ function App() {
     "Alberobello",
     "Catania",
     "Bologna",
-    "Como"
+    "Como",
   ];
 
   useEffect(() => {
@@ -36,7 +36,7 @@ function App() {
           }).then((response) => response.json())
         );
         const responses = await Promise.all(requests);
-        console.log(responses)
+        console.log(responses);
         setImgUrls(responses.map((response) => response.results[0].urls.small));
       } catch (error) {
         console.log(error);
@@ -52,10 +52,10 @@ function App() {
         setBestScore(score);
       }
       setScore(0);
-     console.log(document.querySelectorAll(".clicked"))
-     document.querySelectorAll(".clicked").forEach(element=>{
-      element.classList.remove("clicked")
-     })
+      console.log(document.querySelectorAll(".clicked"));
+      document.querySelectorAll(".clicked").forEach((element) => {
+        element.classList.remove("clicked");
+      });
     } else {
       e.target.className = "clicked";
       setScore((score) => score + 1);
@@ -63,17 +63,38 @@ function App() {
 
     setImgUrls([...imgUrls.sort(() => Math.random() - 0.5)]);
   };
+
+  const handleRestart=function(){
+    setScore(0);
+    setBestScore(0);
+    document.querySelectorAll(".clicked").forEach((element) => {
+      element.classList.remove("clicked");
+    });
+  }
+
   return (
     <>
-      <div className="header">
+    {/*In normalità succede questo*/}
+    {score<10?<><div className="header">
+        <p>EC Italian Memories</p>
+        <div className="scoreDiv">
         <p>Score: {score}</p>
         <p>Best Score:{bestScore}</p>
+
+        </div>
+        
       </div>
       <div className="imgRender">
         {imgUrls.map((url) => (
           <img key={url} src={url} alt="" onClick={handleClick} />
         ))}
-      </div>
+      </div></>:<><div className="popup">
+        <p>Bravo! You Win!</p>
+        <button onClick={handleRestart}>Restart</button>
+
+      </div></>}
+      {/*  */}
+      
     </>
   );
 }
