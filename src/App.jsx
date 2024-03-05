@@ -17,6 +17,8 @@ function App() {
     "Parma",
     "Alberobello",
     "Catania",
+    "Bologna",
+    "Como"
   ];
 
   useEffect(() => {
