@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import gitIcon from "./assets/git-icon.svg"
 import "./App.css";
 function App() {
   const [imgUrls, setImgUrls] = useState([]);
@@ -93,9 +94,14 @@ function App() {
         <button onClick={handleRestart}>Restart</button>
 
       </div></>}
-      {/*  */}
-      
+     <div className="footer">
+     <a href="https://github.com/Eligio93/memory-card" target="_blank">
+      <img src={gitIcon} alt="" />
+      </a>
+     </div>
+       
     </>
+        
   );
 }
 
