@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import gitIcon from "./assets/git-icon.svg"
+import gitIcon from "./assets/git-icon.svg";
 import "./App.css";
 function App() {
   const [imgUrls, setImgUrls] = useState([]);
@@ -37,8 +37,12 @@ function App() {
           }).then((response) => response.json())
         );
         const responses = await Promise.all(requests);
-        console.log(responses);
-        setImgUrls(responses.map((response) => response.results[0].urls.small));
+        setImgUrls(
+          responses.map((response) => ({
+            url: response.results[0].urls.small,
+            clicked: false,
+          }))
+        );
       } catch (error) {
         console.log(error);
       }
@@ -47,61 +51,76 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleClick = function (e) {
-    if (e.target.classList.contains("clicked")) {
+  const handleClick = function (clickedUrl) {
+    let updatedImg;
+    //check if the image is been already clicked
+    let clickedImg = imgUrls.find(
+      (img) => img.url == clickedUrl && img.clicked == true
+    );
+    if (clickedImg) {
+      //set new best score
       if (score > bestScore) {
         setBestScore(score);
       }
       setScore(0);
-      console.log(document.querySelectorAll(".clicked"));
-      document.querySelectorAll(".clicked").forEach((element) => {
-        element.classList.remove("clicked");
-      });
+      //set the new array elements with clicked value on false
+      updatedImg = imgUrls.map((element) => ({ ...element, clicked: false }));
     } else {
-      e.target.className = "clicked";
+      //set the clicked value in the array with the same url on true
+      updatedImg = imgUrls.map((element) =>
+        clickedUrl === element.url ? { ...element, clicked: true } : element
+      );
       setScore((score) => score + 1);
     }
-
-    setImgUrls([...imgUrls.sort(() => Math.random() - 0.5)]);
+    //set the new array with shuffled element and with the objects modified
+    setImgUrls([...updatedImg.sort(() => Math.random() - 0.5)]);
   };
 
-  const handleRestart=function(){
+  const handleRestart = function () {
     setScore(0);
     setBestScore(0);
     document.querySelectorAll(".clicked").forEach((element) => {
       element.classList.remove("clicked");
     });
-  }
+  };
 
   return (
     <>
-    {/*In normalità succede questo*/}
-    {score<10?<><div className="header">
-        <p>EC Italian Memories</p>
-        <div className="scoreDiv">
-        <p>Score: {score}</p>
-        <p>Best Score:{bestScore}</p>
-
-        </div>
-        
+      {/*In normalità succede questo*/}
+      {score < 10 ? (
+        <>
+          <div className="header">
+            <p>EC Italian Memories</p>
+            <div className="scoreDiv">
+              <p>Score: {score}</p>
+              <p>Best Score:{bestScore}</p>
+            </div>
+          </div>
+          <div className="imgRender">
+            {imgUrls.map((element) => (
+              <img
+                key={element.url}
+                src={element.url}
+                alt=""
+                onClick={() => handleClick(element.url)}
+              />
+            ))}
+          </div>
+        </>
+      ) : (
+        <>
+          <div className="popup">
+            <p>Bravo! You Win!</p>
+            <button onClick={handleRestart}>Restart</button>
+          </div>
+        </>
+      )}
+      <div className="footer">
+        <a href="https://github.com/Eligio93/memory-card" target="_blank">
+          <img src={gitIcon} alt="" />
+        </a>
       </div>
-      <div className="imgRender">
-        {imgUrls.map((url) => (
-          <img key={url} src={url} alt="" onClick={handleClick} />
-        ))}
-      </div></>:<><div className="popup">
-        <p>Bravo! You Win!</p>
-        <button onClick={handleRestart}>Restart</button>
-
-      </div></>}
-     <div className="footer">
-     <a href="https://github.com/Eligio93/memory-card" target="_blank">
-      <img src={gitIcon} alt="" />
-      </a>
-     </div>
-       
     </>
-        
   );
 }
 
