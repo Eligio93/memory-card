@@ -21,7 +21,7 @@ function App() {
     "Bologna",
     "Como",
   ];
-
+  //use effect to fetch data
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -36,6 +36,7 @@ function App() {
             mode: "cors",
           }).then((response) => response.json())
         );
+        //organize all the response in the object array ImgUrls
         const responses = await Promise.all(requests);
         setImgUrls(
           responses.map((response) => ({
@@ -79,9 +80,9 @@ function App() {
   const handleRestart = function () {
     setScore(0);
     setBestScore(0);
-    document.querySelectorAll(".clicked").forEach((element) => {
-      element.classList.remove("clicked");
-    });
+    //set all clicked property on false
+    let updatedImg = imgUrls.map((element) => ({ ...element, clicked: false }));
+    setImgUrls(updatedImg)
   };
 
   return (
