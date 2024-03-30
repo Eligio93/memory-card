@@ -114,4 +114,10 @@ body{
 .header > p{
   font-size: 2em;
 }
+.scoreDiv{
+  font-size: 1em;
+}
+.scoreDiv :nth-child(1){
+  border-bottom: 1px solid white;
+}
 }
