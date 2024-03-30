@@ -107,3 +107,11 @@ body{
   cursor: pointer;
   transform: rotate(360deg);
 }
+/*media queries*/
+
+@media screen and (max-width:640px){
+
+.header > p{
+  font-size: 2em;
+}
+}
